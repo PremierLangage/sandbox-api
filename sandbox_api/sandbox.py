@@ -2,6 +2,8 @@
 #
 # Authors:
 #   - Coumes Quentin <coumes.quentin@gmail.com>
+
+
 import io
 import json
 import os
@@ -53,6 +55,24 @@ class Sandbox:
             perl (dict): The installed perl modules.
         bin (dict): Every command available in PATH on the sandbox
     """
+    
+    sandbox_version: str
+    sandbox_version: str
+    docker_version: str
+    containers: dict
+    memory: dict
+    environ: dict
+    execute_timeout: Union[int, float]
+    expiration: int
+    python3: str
+    python2: str
+    java: str
+    gcc: str
+    gpp: str
+    perl: str
+    postgres: str
+    libraries: dict
+    bin: dict
     
     # Lists of the sandbox's endpoints
     _endpoints = {
