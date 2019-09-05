@@ -73,6 +73,7 @@ Available attributes are:
     *   docker_version (str): Version of docker used by the sandbox formatted as 'MAJOR.MINOR.PATCH'
     *   containers (dict): Dict containing the status of the containers running on the sandbox.
     *   memory (dict): Memory limits for each containers on the sandbox.
+    *   cpu (dict): CPU information for each containers on the sandbox.
     *   environ (dict): Environments variables use in the containers.
     *   execute_timeout (Union[int, float]): Time in seconds before an 'execute/' request timeout.
     *   expiration (int): Time in before an environment expire on the sandbox.
