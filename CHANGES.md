@@ -1,6 +1,11 @@
 # Changelog
 
 
+#### 0.0.4
+
+* Added function `validate()` to check a config dict in `sandbox_api.utils`.
+
+
 #### 0.0.3
 
 * Added missing type hints `cpu` for `Sandbox`
