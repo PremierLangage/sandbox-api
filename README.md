@@ -128,6 +128,8 @@ environ, if provided, must be a binary object implementing the `.read()` (I.G. `
 
 The returned value is a dictionary corresponding to the response's json :
 
+You can check a config dictionnary by calling `sandbox_api.utils.validate(config)`.
+
 ```python
 s.execute({
      "commands": [
