@@ -6,6 +6,7 @@
 
 import os
 import tarfile
+import time
 import unittest
 
 from sandbox_api import Sandbox, Sandbox400, Sandbox404
@@ -219,6 +220,7 @@ class SandboxDownloadTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
+        time.sleep(0.1)
         downloaded = s.download(response["environment"])
         
         f.seek(0)
@@ -239,6 +241,7 @@ class SandboxDownloadTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
+        time.sleep(0.1)
         downloaded = s.download(response["environment"], "dir/file1.txt")
         
         self.assertEqual(b"env1\n", downloaded.read())
@@ -246,8 +249,7 @@ class SandboxDownloadTestCase(unittest.TestCase):
     
     def test_download_env_unknown(self):
         s = Sandbox(TEST_URL)
-        f = open(os.path.join(RESOURCE_DIR, "dae5f9a3-a911-4df4-82f8-b9343241ece5.tgz"), "rb")
-        
+        time.sleep(0.1)
         with self.assertRaises(Sandbox404):
             s.download("unknown")
     
@@ -260,7 +262,8 @@ class SandboxDownloadTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
-        
+
+        time.sleep(0.1)
         with self.assertRaises(Sandbox404):
             s.download(response["environment"], "unknown.unk")
 
@@ -276,6 +279,7 @@ class SandboxCheckTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
+        time.sleep(0.1)
         self.assertTrue(s.check(response["environment"]))
     
     
@@ -287,11 +291,13 @@ class SandboxCheckTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
+        time.sleep(0.1)
         self.assertTrue(s.check(response["environment"], "dir/file1.txt"))
     
     
     def test_check_env_unknown(self):
         s = Sandbox(TEST_URL)
+        time.sleep(0.1)
         self.assertFalse(s.check("unknown"))
     
     
@@ -303,4 +309,5 @@ class SandboxCheckTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
+        time.sleep(0.1)
         self.assertFalse(s.check(response["environment"], "unknown.unk"))
