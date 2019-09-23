@@ -180,7 +180,7 @@ class Sandbox:
         return self.containers["running"] / self.containers["total"]
     
     
-    def download(self, uuid: str, path=None) -> BinaryIO:
+    def download(self, uuid: str, path: str = None) -> BinaryIO:
         """Download an environment or a specific file inside an environment."""
         if path is None:
             url = self._build_url("environments", uuid)
@@ -192,6 +192,20 @@ class Sandbox:
             raise status_exceptions(response)
         
         return io.BytesIO(response.content)
+    
+    
+    def check(self, uuid: str, path: str = None) -> bool:
+        """Check if an environment or a specific file inside an environment exists."""
+        if path is None:
+            url = self._build_url("environments", uuid)
+        else:
+            url = self._build_url("files", uuid, path)
+        
+        response = requests.head(url)
+        if response.status_code not in [200, 404]:  # pragma: no cover
+            raise status_exceptions(response)
+        
+        return response.status_code == 200
     
     
     def execute(self, config: Union[dict], environ: Optional[BinaryIO] = None) -> dict:
