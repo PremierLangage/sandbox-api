@@ -1,6 +1,11 @@
 # Changelog
 
 
+#### 0.0.5
+
+* Added method `check()` to `Sandbox` to check if an environment/file exists on the sandbox.
+
+
 #### 0.0.4
 
 * Added function `validate()` to check a config dict in `sandbox_api.utils`.
