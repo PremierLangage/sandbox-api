@@ -1,6 +1,10 @@
 # Changelog
 
 
+#### 0.0.7
+
+* Now use Github Action for testing and deployment to PyPI
+
 #### 0.0.6
 
 * Added method `Sandbox451`
