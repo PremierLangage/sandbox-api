@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/qcoumes/sandbox-api.svg?branch=master)](https://travis-ci.org/qcoumes/sandbox-api)
+[![Python package](https://github.com/qcoumes/sandbox-api/workflows/Python%20package/badge.svg)](https://github.com/qcoumes/sandbox-api/actions/)
 [![codecov](https://codecov.io/gh/qcoumes/sandbox-api/branch/master/graph/badge.svg)](https://codecov.io/gh/qcoumes/sandbox-api)
 [![CodeFactor](https://www.codefactor.io/repository/github/qcoumes/sandbox-api/badge)](https://www.codefactor.io/repository/github/qcoumes/sandbox-api)
 [![PyPI Version](https://badge.fury.io/py/sandbox-api.svg)](https://badge.fury.io/py/sandbox-api)
-[![Python 3.5+](https://img.shields.io/badge/python-3.5+-brightgreen.svg)](#)
+[![Python 3.7+](https://img.shields.io/badge/python-3.5+-brightgreen.svg)](#)
 [![License MIT](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/qcoumes/sandbox-api/blob/master/LICENSE)
 
 # Python API for WIMS' adm/raw module
