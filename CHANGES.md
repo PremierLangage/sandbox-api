@@ -1,6 +1,11 @@
 # Changelog
 
 
+#### 0.0.6
+
+* Added method `Sandbox451`
+* Added python 3.8 tp test matrix
+
 #### 0.0.5
 
 * Added method `check()` to `Sandbox` to check if an environment/file exists on the sandbox.

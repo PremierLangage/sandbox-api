@@ -18,6 +18,7 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
     'Topic :: Software Development :: Libraries :: Python Modules'
 ]
 
@@ -32,7 +33,7 @@ long_description = (
 
 setup(
     name='sandbox-api',
-    version="0.0.5",
+    version="0.0.6",
     description=description,
     long_description=long_description,
     long_description_content_type='text/markdown',
