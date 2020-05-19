@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0
+
+* Now compatible with Sandbox 3.0.0
 
 #### 0.0.7
 

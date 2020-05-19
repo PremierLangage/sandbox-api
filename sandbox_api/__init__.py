@@ -4,6 +4,7 @@
 #   - Coumes Quentin <coumes.quentin@gmail.com>
 
 
+from .enums import SandboxErrCode
 from .exceptions import (Sandbox300, Sandbox301, Sandbox302, Sandbox303, Sandbox304, Sandbox305,
                          Sandbox307, Sandbox308, Sandbox400, Sandbox401, Sandbox402, Sandbox403,
                          Sandbox404, Sandbox405, Sandbox406, Sandbox407, Sandbox408, Sandbox409,
@@ -16,4 +17,4 @@ from .exceptions import (Sandbox300, Sandbox301, Sandbox302, Sandbox303, Sandbox
 from .sandbox import Sandbox
 
 
-VERSION = __version__ = "0.0.7"
+VERSION = __version__ = "1.0.0"
