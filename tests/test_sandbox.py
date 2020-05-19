@@ -18,42 +18,21 @@ TEST_URL = os.environ.get("SANDBOX_URL", "http://127.0.0.1:7000/")
 RESOURCE_DIR = os.path.join(os.path.dirname(__file__), "resources")
 
 
-
 class SandboxTestCase(unittest.TestCase):
-    
-    def test_properties_specs(self):
-        s = Sandbox(TEST_URL)
-        for attr in Sandbox._specs:
-            self.assertIsNotNone(getattr(s, attr))
-    
-    
-    def test_properties_libs(self):
-        s = Sandbox(TEST_URL)
-        for attr in Sandbox._libs:
-            self.assertIsNotNone(getattr(s, attr))
-    
-    
-    def test_property_unknown(self):
-        s = Sandbox(TEST_URL)
-        with self.assertRaises(AttributeError):
-            s.unknown
-    
-    
-    def test_property_decorator(self):
-        s = Sandbox(TEST_URL)
-        self.assertIsInstance(s.cpu, dict)  # getter
-        s.cpu = 2  # setter
-        self.assertEqual(2, s.cpu)
-        delattr(s, "cpu")  # deleter
-        self.assertIsInstance(s.cpu, dict)
-    
     
     def test_usage(self):
         s = Sandbox(TEST_URL)
-        # self.assertEqual(0, s.usage())
-        s.execute({"commands": ["sleep 0.5"]})
-        self.assertGreater(s.usage(), 0.01)
-
+        self.assertTrue(dict, type(s.usage()))
+    
+    
+    def test_libraries(self):
+        s = Sandbox(TEST_URL)
+        self.assertTrue(dict, type(s.libraries()))
+    
+    
+    def test_specifications(self):
+        s = Sandbox(TEST_URL)
+        self.assertTrue(dict, type(s.specifications()))
 
 
 class SandboxExecuteTestCase(unittest.TestCase):
@@ -91,7 +70,7 @@ class SandboxExecuteTestCase(unittest.TestCase):
         self.assertEqual(0, result["status"])
         self.assertEqual(1, len(result["execution"]))
         self.assertNotIn("environment", result)
-        self.assertEqual("Hello World !", result["result"])
+        self.assertEqual("Hello World !\n", result["result"])
         
         real_total = sum(r["time"] for r in result["execution"])
         self.assertTrue(result["total_time"] - 0.5 <= real_total <= result["total_time"])
@@ -110,7 +89,7 @@ class SandboxExecuteTestCase(unittest.TestCase):
         self.assertEqual(0, result["status"])
         self.assertEqual(1, len(result["execution"]))
         self.assertIn("environment", result)
-        self.assertEqual("Hello World !", result["result"])
+        self.assertEqual("Hello World !\n", result["result"])
         
         real_total = sum(r["time"] for r in result["execution"])
         self.assertTrue(result["total_time"] - 0.5 <= real_total <= result["total_time"])
@@ -134,7 +113,7 @@ class SandboxExecuteTestCase(unittest.TestCase):
         self.assertEqual(0, result["status"])
         self.assertEqual(1, len(result["execution"]))
         self.assertIn("environment", result)
-        self.assertEqual("Hello World !", result["result"])
+        self.assertEqual("Hello World !\n", result["result"])
         
         real_total = sum(r["time"] for r in result["execution"])
         self.assertTrue(result["total_time"] - 0.5 <= real_total <= result["total_time"])
@@ -143,10 +122,10 @@ class SandboxExecuteTestCase(unittest.TestCase):
     def test_execute_ok_environ(self):
         s = Sandbox(TEST_URL)
         result = s.execute({
-            "commands":    [
+            "commands": [
                 'echo $VAR1'
             ],
-            "environ":     {
+            "environ":  {
                 "VAR1": "My var"
             },
         })
@@ -167,7 +146,7 @@ class SandboxExecuteTestCase(unittest.TestCase):
         self.assertEqual("sleep 1", result["execution"][1]["command"])
         self.assertEqual(SandboxErrCode.TIMEOUT, result["execution"][1]["exit_code"])
         self.assertEqual("", result["execution"][1]["stdout"])
-        self.assertEqual(f"Sandbox timed out after 0.2 seconds\n", result["execution"][1]["stderr"])
+        self.assertEqual(f"Command timed out after 0.2 seconds\n", result["execution"][1]["stderr"])
         self.assertIsInstance(result["execution"][1]["time"], float)
         self.assertLessEqual(result["execution"][1]["time"], 0.25)
     
@@ -207,7 +186,6 @@ class SandboxExecuteTestCase(unittest.TestCase):
         s = Sandbox(TEST_URL)
         with self.assertRaises(Sandbox400):
             s.execute("Definitely not json")
-
 
 
 class SandboxDownloadTestCase(unittest.TestCase):
@@ -262,11 +240,10 @@ class SandboxDownloadTestCase(unittest.TestCase):
             "commands": ["true"],
             "save":     True,
         }, f)
-
+        
         time.sleep(0.1)
         with self.assertRaises(Sandbox404):
             s.download(response["environment"], "unknown.unk")
-
 
 
 class SandboxCheckTestCase(unittest.TestCase):
