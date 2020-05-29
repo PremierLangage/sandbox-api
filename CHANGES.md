@@ -1,5 +1,9 @@
 # Changelog
 
+#### 1.0.1
+
+* Update README.md
+
 ## 1.0.0
 
 * Now compatible with Sandbox 3.0.0

@@ -17,4 +17,4 @@ from .exceptions import (Sandbox300, Sandbox301, Sandbox302, Sandbox303, Sandbox
 from .sandbox import Sandbox
 
 
-VERSION = __version__ = "1.0.0"
+VERSION = __version__ = "1.0.1"

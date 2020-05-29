@@ -18,7 +18,7 @@ The latest stable version is available on [PyPI](https://pypi.org/project/sandbo
 pip install sandbox-api
 ```
 
-or from the sources:
+or from sources:
 
 ```bash
 git clone https://github.com/qcoumes/sandbox-api
@@ -35,76 +35,63 @@ python3 setup.py install
  ```python
 from sandbox_api import Sandbox
 
-s = Sandbox("http://www.my-sandbox.com")
+sandbox = Sandbox("http://www.my-sandbox.com")
 ```
 
-### Specifications and libraries
+### Specifications
 
-The specs of the sandbox and the libraries installed are available as attributes:
+You can obtain the sandbox' host and container with the `.specifications()` method :
 
 ```python
-s.cpu
-{'count': 1, 'period': 1000, 'shares': 1024, 'quota': 0, 'name': 'Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz'}
-
-s.containers
-{'total': 5, 'running': 0, 'available': 5}
-
-s.python3
-'3.7.3'
-
-s.python2
-'2.7.16'
+>>> pprint.pp(sandbox.specifications())
+{'host': {'cpu': {'core': 6,
+                  'logical': 12,
+                  'freq_min': 800.0,
+                  'freq_max': 4700.0},
+          'memory': {'ram': 16723701760,
+                     'swap': 9448923136,
+                     'storage': {'/dev/sda2': 225603444736,
+                                 '/dev/sda1': 313942016,
+                                 '/dev/sdc1': 2000396288000}},
+          'docker_version': '19.03.8-ce',
+          'sandbox_version': '3.0.0'},
+ 'container': {'count': 20,
+               'cpu': {'count': 1, 'period': 1000, 'shares': 1024, 'quota': 0},
+               'memory': {'ram': 100000000, 'swap': 100000000, 'storage': -1},
+               'io': {'read_iops': {},
+                      'read_bps': {},
+                      'write_iops': {},
+                      'write_bps': {}},
+               'process': -1,
+               'working_dir_device': '/dev/sda2'}}
 ```
 
-Attribute other than 'url' are retrieved from the sandbox at first access, attribute are
-separated in two categories, specifications and libraries. Every attribute of one category are
-retrieved the first time an attribute of the corresponding category is accessed.
+### Usage
 
-These attributes are fetch through HTTP requests, this can take some times (should be no more
-than 2 seconds), especially for the libraries category.
-
-Note that attributes are cached (except for 'containers'), and subsequent access to one category
-are instantaneous.
-
-Available attributes are:
-
-* Specifications
-    *   sandbox_version (str): Version of the sandbox formatted as 'MAJOR.MINOR.PATCH'.
-    *   docker_version (str): Version of docker used by the sandbox formatted as 'MAJOR.MINOR.PATCH'
-    *   containers (dict): Dict containing the status of the containers running on the sandbox.
-    *   memory (dict): Memory limits for each containers on the sandbox.
-    *   cpu (dict): CPU information for each containers on the sandbox.
-    *   environ (dict): Environments variables use in the containers.
-    *   execute_timeout (Union[int, float]): Time in seconds before an 'execute/' request timeout.
-    *   expiration (int): Time in before an environment expire on the sandbox.
-* Libraries
-    *   python3 (str): Version of python3 used by the sandbox formatted as 'MAJOR.MINOR.PATCH'.
-    *   python2 (str): Version of python2 used by the sandbox formatted as 'MAJOR.MINOR.PATCH'.
-    *   java (str): Version of java used by the sandbox formatted as 'JDK MAJOR.MINOR'.
-    *   gcc (str): Version of gcc used by the sandbox formatted as 'MAJOR.MINOR.PATCH'.
-    *   gpp (str): Version of g++ used by the sandbox formatted as 'MAJOR.MINOR.PATCH'.
-    *   perl (str): Version of perl used by the sandbox formatted as 'MAJOR.MINOR.PATCH'.
-    *   postgres (str): Version of postgres used by the sandbox formatted as 'MAJOR.MINOR'.
-    *   libraries (dict): Dict containing :
-        *   system (dict): The installed packages (dpkg).
-        *   c (dict): The installed libraries and their version.
-        *   python (dict): The installed python modules.
-        *   perl (dict): The installed perl modules.
-    *   bin (dict): Every command available in PATH on the sandbox
-
-
-### Sandbox current load
-
-It is possible to obtain the current load of the sandbox with the `usage()` method.
-It returns a float between 0 and 1, indicating the current charge on the sandbox, 0 means that the
-sandbox is currently unused, 1 means that it is used a full capacity and an 'execute/' request will
-probably be delayed.
+You can obtain the sandbox' usage with the `.usage()` method :
 
 ```python
-s.usage()
-0.2
-```
+>>> pprint.pp(sandbox.usage())
+{'cpu': {'frequency': 800.0504166666668,
+         'usage': 0.085,
+         'usage_avg': [0.10416666666666667, 0.09000000000000001, 0.0775]},
+ 'memory': {'ram': 5376819200,
+            'swap': 0,
+            'storage': {'/dev/sda2': 60275105792,
+                        '/dev/sda1': 286720,
+                        '/dev/sdc1': 1294363865088}},
+ 'io': {'read_iops': {'/dev/sdc1': 0, '/dev/sda1': 0, '/dev/sda2': 0},
+        'read_bps': {'/dev/sdc1': 0, '/dev/sda1': 0, '/dev/sda2': 0},
+        'write_iops': {'/dev/sdc1': 0, '/dev/sda1': 0, '/dev/sda2': 0},
+        'write_bps': {'/dev/sdc1': 0, '/dev/sda1': 0, '/dev/sda2': 2048}},
+ 'network': {'sent_bytes': 514,
+             'received_bytes': 526,
+             'sent_packets': 6,
+             'received_packets': 6},
+ 'process': 326,
+ 'container': 0}
 
+```
 
 ### Downloading environments and files
 
