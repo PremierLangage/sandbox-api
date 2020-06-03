@@ -27,15 +27,21 @@ python3 setup.py install
 ```
  
  
- ## Usage
+## Usage
  
- Sandbox-api is pretty straightforward to use, you just need to import Sandbox and create
- an instance with the url of the server :
+Sandbox-api is pretty straightforward to use, you just need to import Sandbox and create
+an instance with the url of the server :
  
- ```python
+```python
 from sandbox_api import Sandbox
 
 sandbox = Sandbox("http://www.my-sandbox.com")
+```
+
+Default request timeout is 60 seconds, use the `timeout` argument to override :
+
+```python
+sandbox = Sandbox("http://www.my-sandbox.com", timeout=2.5)
 ```
 
 ### Specifications
@@ -66,7 +72,7 @@ You can obtain the sandbox' host and container with the `.specifications()` meth
                'working_dir_device': '/dev/sda2'}}
 ```
 
-### Usage
+### Sandbox' Usage
 
 You can obtain the sandbox' usage with the `.usage()` method :
 
@@ -118,26 +124,87 @@ The returned value is a dictionary corresponding to the response's json :
 You can check a config dictionnary by calling `sandbox_api.utils.validate(config)`.
 
 ```python
-s.execute({
+>>> pprint.pp(sandbox.execute({
      "commands": [
              "echo $((2+2))"
      ]
-})
+}))
 
-{
-    'status': 0,
-    'execution': [
-        {
-            'command': 'echo $((2+2))',
-            'exit_code': 0,
-            'stdout': '4',
-            'stderr': '',
-            'time': 0.28589797019958496
+{'status': 0,
+ 'execution': [ {'command': 'echo $((2+2))',
+                 'exit_code': 0,
+                 'stdout': '4',
+                 'stderr': '',
+                 'time': 0.28589797019958496
         }
     ],
-    'total_time': 0.2871053218841553
-}
+ 'total_time': 0.2871053218841553}
 ```
+
+## Asynchronous API
+
+Since requests may take sometime before a response is available, an asynchronous interface is available
+through the class `ASandbox` : 
+
+ ```python
+from sandbox_api import ASandbox
+
+sandbox = ASandbox("http://www.my-sandbox.com")
+```
+
+`ASandbox` use [*aiohttp*](https://docs.aiohttp.org/en/stable/index.html), so timeout works
+differently. The default total timeout is still 60 seconds, but you're able to set differents
+timeout for different part of the process with the following arguments :
+
+* `total` : The whole operation time including connection
+        establishment, request sending and response reading.
+* `connect` : The time consists connection establishment for a new
+        connection or waiting for a free connection from a pool if
+        pool connection limits are exceeded.
+* `sock_connect` : A timeout for connecting to a peer for a new
+        connection, not given from a pool.
+* `sock_read` : The maximum allowed timeout for period between reading
+        a new data portion from a peer.
+
+```python
+sandbox = ASandbox("http://www.my-sandbox.com", total=2.5, connect=0.5)
+```
+
+All parameters are `floats`. `None` or `0` disables a particular timeout check, see the
+[*aiohttp's ClientTimeout*](https://docs.aiohttp.org/en/stable/client_reference.html#aiohttp.ClientTimeout)
+reference for defaults and additional details.
+
+To send requests, `ASandbox` uses a session that must be closed once done with the instance :
+
+```python
+sandbox = ASandbox("http://www.my-sandbox.com", total=2.5, connect=0.5)
+
+# do stuff with sandbox
+
+await sandbox.close()
+```
+
+You can also use a context manager to automatically close the session once done :
+
+```python
+async with ASandbox("http://www.my-sandbox.com") as sandbox:
+    # do stuff with sandbox
+```
+
+Apart from the above, all the methods are the same than `Sandbox` but are all declared with the
+`async` keyword and must be awaited :
+
+```python
+async with ASandbox("http://my-sandbox.com") as sandbox:
+    usage = await sandbox.usage()
+    specs = await sandbox.specifications()
+    execution = await sandbox.execute({
+        "commands": [
+            "echo $((2+2))"
+        ]
+    })
+```
+
 
 ## Exceptions
 

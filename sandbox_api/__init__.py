@@ -15,6 +15,7 @@ from .exceptions import (Sandbox300, Sandbox301, Sandbox302, Sandbox303, Sandbox
                          Sandbox507, Sandbox508, Sandbox510, Sandbox511, SandboxError,
                          status_exceptions)
 from .sandbox import Sandbox
+from .asandbox import ASandbox
 
 
-VERSION = __version__ = "1.0.1"
+VERSION = __version__ = "1.1.0"

@@ -7,6 +7,16 @@
 from typing import Tuple
 
 
+# Lists of the sandbox's endpoints
+ENDPOINTS = {
+    "specifications": "specifications/",
+    "libraries":      "libraries/",
+    "usages":         "usages/",
+    "environments":   "environments/%s/",
+    "files":          "files/%s/%s/",
+    "execute":        "execute/",
+}
+
 
 def validate_command(c: dict) -> bool:
     """Returns True if <d> is a valid representation of a command, False otherwise.
@@ -18,7 +28,6 @@ def validate_command(c: dict) -> bool:
         'command' in c and isinstance(c["command"], str),
         "timeout" not in c or isinstance(c["timeout"], (int, float)),
     ))
-
 
 
 def validate(config: dict) -> Tuple[bool, str]:

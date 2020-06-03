@@ -1,5 +1,14 @@
 # Changelog
 
+### 1.1.0
+
+* `Sandbox.check()` now return the size of the environment / file, 0 if not
+    found. It should not break backward compatibility because of how int are
+    evaluated as boolean.
+* Added an `async` implementation of the api using the class `ASandbox`.
+* `async` implementation depends on `aiohttp`.
+* Drop support for Python 3.5 & 3.6
+
 #### 1.0.1
 
 * Update README.md

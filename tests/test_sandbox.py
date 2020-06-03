@@ -200,8 +200,8 @@ class SandboxDownloadTestCase(unittest.TestCase):
         }, f)
         time.sleep(0.1)
         downloaded = s.download(response["environment"])
-        
-        f.seek(0)
+
+        f = open(os.path.join(RESOURCE_DIR, "dae5f9a3-a911-4df4-82f8-b9343241ece5.tgz"), "rb")
         with tarfile.open(fileobj=f, mode="r|gz") as t1, \
                 tarfile.open(fileobj=downloaded, mode="r|gz") as t2:
             l1 = [m.name for m in t1.getmembers() if m.name]

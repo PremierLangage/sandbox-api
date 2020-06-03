@@ -10,10 +10,8 @@ import unittest
 import sandbox_api
 
 
-
 class Dummy:
     pass
-
 
 
 class MyTestCase(unittest.TestCase):
@@ -27,7 +25,9 @@ class MyTestCase(unittest.TestCase):
         a = Dummy()
         a.status_code = 404
         self.assertIsInstance(sandbox_api.status_exceptions(a), sandbox_api.Sandbox404)
-
+        b = Dummy()
+        b.status = 404
+        self.assertIsInstance(sandbox_api.status_exceptions(a), sandbox_api.Sandbox404)
 
 
 if __name__ == '__main__':

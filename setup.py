@@ -33,7 +33,7 @@ long_description = (
 
 setup(
     name='sandbox-api',
-    version="1.0.1",
+    version="1.1.0",
     description=description,
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -41,6 +41,6 @@ setup(
     author_email='coumes.quentin@gmail.com',
     url='https://github.com/qcoumes/sandbox-api',
     packages=['sandbox_api'],
-    install_requires=['requests'],
-    classifiers=CLASSIFIERS
+    install_requires=['requests', 'aiohttp'],
+    classifiers=CLASSIFIERS,
 )
