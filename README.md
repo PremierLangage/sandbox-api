@@ -196,13 +196,15 @@ Apart from the above, all the methods are the same than `Sandbox` but are all de
 
 ```python
 async with ASandbox("http://my-sandbox.com") as sandbox:
-    usage = await sandbox.usage()
-    specs = await sandbox.specifications()
-    execution = await sandbox.execute({
-        "commands": [
-            "echo $((2+2))"
-        ]
-    })
+    usage, specs, execution = await asyncio.gather(
+        sandbox.usage(),
+        sandbox.specifications(),
+        sandbox.execute({
+            "commands": [
+                "echo $((2+2))"
+            ]
+        })
+    )
 ```
 
 
