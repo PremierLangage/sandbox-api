@@ -19,7 +19,8 @@ ENDPOINTS = {
 
 
 def validate_command(c: dict) -> bool:
-    """Returns True if <d> is a valid representation of a command, False otherwise.
+    """Returns True if <d> is a valid representation of a command,
+    False otherwise.
 
     Check that:
         - 'command' is present and is a string.
@@ -33,10 +34,10 @@ def validate_command(c: dict) -> bool:
 def validate(config: dict) -> Tuple[bool, str]:
     """Check the validity of a config dictionary.
     
-    Returns a tuple (bool, msg). If bool is True, the config dictionary is valid and msg is an
-    empty string.
-    If bool is False, the config dictionary is invalid and msg contains a message explaining the
-    error."""
+    Returns a tuple (bool, msg). If bool is True, the config dictionary is valid
+    and msg is an empty string.
+    If bool is False, the config dictionary is invalid and msg contains a
+    message explaining the error."""
     if "result_path" in config and not isinstance(config["result_path"], str):
         return False, f'result_path must be a string, not {type(config["result_path"])}'
     if "save" in config and not isinstance(config["save"], bool):

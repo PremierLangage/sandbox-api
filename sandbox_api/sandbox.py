@@ -80,8 +80,8 @@ class Sandbox:
         """Return the size of an environment or a specific file, 0 if it was not
         found.
         
-        Can be used to check if an environment or a specific file inside an environment
-        exists."""
+        Can be used to check if an environment or a specific file inside an
+        environment exists."""
         if path is None:
             url = self._build_url("environments", uuid)
         else:
