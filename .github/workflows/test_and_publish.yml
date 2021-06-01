@@ -56,10 +56,6 @@ jobs:
 
     steps:
 
-      - name: test echo
-        run: echo ${{ secrets.PYPI_API_TOKEN }}
-
-
       - uses: actions/checkout@master
 
       - name: Set up Python 3.8
