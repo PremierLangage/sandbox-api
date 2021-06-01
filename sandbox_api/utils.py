@@ -15,7 +15,6 @@ ENDPOINTS = {
     "environments":   "environments/%s/",
     "files":          "files/%s/%s/",
     "execute":        "execute/",
-    "fr":        "loader/fr/",
 }
 
 
