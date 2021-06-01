@@ -68,11 +68,7 @@ jobs:
       - name: Publish distribution to PyPI
         uses: pypa/gh-action-pypi-publish@master
         with:
+          verbose: true
+          user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
           skip_existing: true
-
-      - name: Publish distribution to PyPI
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
-
