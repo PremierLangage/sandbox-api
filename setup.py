@@ -32,7 +32,7 @@ long_description = (
 )
 
 setup(
-    name='pl_sandbox-api',
+    name='pl-sandbox-api',
     version="1.1.1",
     description=description,
     long_description=long_description,

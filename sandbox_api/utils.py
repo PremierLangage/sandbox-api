@@ -16,6 +16,7 @@ ENDPOINTS = {
     "files":          "files/%s/%s/",
     "execute":        "execute/",
     "load/fr":        "loader/fr/",
+    "demo":        "loader/demo/pl/",
 }
 
 

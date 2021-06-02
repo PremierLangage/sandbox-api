@@ -135,7 +135,7 @@ class ASandbox(AbstractAsyncContextManager):
             return await response.json()
 
 
-    async def load(self, environ: Union[dict]) -> dict:
+    async def load(self, environ: dict) -> dict:
         """Asynchronously execute commands on the sandbox according to <config>
         and <environ>, returning the response's json as a dict.
         
@@ -143,8 +143,25 @@ class ASandbox(AbstractAsyncContextManager):
         used further."""
         data = aiohttp.FormData()
         data.add_field("data", json.dumps(environ))
-        
+     
         async with self.session.post(await self._build_url("load/fr"), data=data) as response:
+            if response.status != 200:
+                raise status_exceptions(response)
+            
+            return await response.json()
+
+
+async def demo(self, environ: dict) -> dict:
+        """Asynchronously execute commands on the sandbox according to <config>
+        and <environ>, returning the response's json as a dict.
+        
+        <environ>, if not None, will be consumed and closed and shall not be
+        used further."""
+        data = aiohttp.FormData()
+        data.add_field("data", json.dumps(environ))
+        data.add_field("demo", True)
+        
+        async with self.session.post(await self._build_url("demo"), data=data) as response:
             if response.status != 200:
                 raise status_exceptions(response)
             
