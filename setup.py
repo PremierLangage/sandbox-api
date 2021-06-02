@@ -33,7 +33,7 @@ long_description = (
 
 setup(
     name='pl_sandbox-api',
-    version="1.1.0",
+    version="1.1.1",
     description=description,
     long_description=long_description,
     long_description_content_type='text/markdown',
