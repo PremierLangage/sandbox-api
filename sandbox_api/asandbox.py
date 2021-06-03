@@ -151,7 +151,7 @@ class ASandbox(AbstractAsyncContextManager):
             return await response.json()
 
 
-async def demo(self, environ: dict) -> dict:
+    async def demo(self, environ: dict) -> dict:
         """Asynchronously execute commands on the sandbox according to <config>
         and <environ>, returning the response's json as a dict.
         
