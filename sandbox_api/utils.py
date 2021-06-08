@@ -17,6 +17,7 @@ ENDPOINTS = {
     "execute":        "execute/",
     "load/fr":        "loader/fr/",
     "demo":        "loader/demo/pl/",
+    "exo":        "loader/play/pl/",
 }
 
 
