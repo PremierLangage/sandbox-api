@@ -176,7 +176,7 @@ class ASandbox(AbstractAsyncContextManager):
         used further."""
         data = aiohttp.FormData()
         data.add_field("data", json.dumps(environ))
-        data.add_field("data", json.dumps(config))
+        data.add_field("config", json.dumps(config))
         
         async with self.session.post(await self._build_url("exo"), data=data) as response:
             if response.status != 200:
