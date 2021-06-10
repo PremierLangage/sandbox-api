@@ -168,7 +168,7 @@ class ASandbox(AbstractAsyncContextManager):
             return await response.json()
 
 
-    async def playexo(self, environ: dict) -> dict:
+    async def playexo(self, config: dict, environ: dict) -> dict:
         """Asynchronously execute commands on the sandbox according to <config>
         and <environ>, returning the response's json as a dict.
         
@@ -176,6 +176,7 @@ class ASandbox(AbstractAsyncContextManager):
         used further."""
         data = aiohttp.FormData()
         data.add_field("data", json.dumps(environ))
+        data.add_field("data", json.dumps(config))
         
         async with self.session.post(await self._build_url("exo"), data=data) as response:
             if response.status != 200:
