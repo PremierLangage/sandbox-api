@@ -183,3 +183,20 @@ class ASandbox(AbstractAsyncContextManager):
                 raise status_exceptions(response)
             
             return await response.json()
+
+    async def exec(self, datas: dict = {}) -> dict:
+        """Asynchronously execute commands on the sandbox according to <config>
+        and <environ>, returning the response's json as a dict.
+        
+        <environ>, if not None, will be consumed and closed and shall not be
+        used further."""
+        data = aiohttp.FormData()
+        data.add_field("data", json.dumps(datas))
+        for key, value in datas.items():
+            data.add_field(str(key), value)   
+        
+        async with self.session.post(await self._build_url("exec"), data=data) as response:
+            if response.status != 200:
+                raise status_exceptions(response)
+            
+            return await response.json()
